@@ -13,6 +13,29 @@ firebase = firebase.FirebaseApplication("https://nupokushaembot.firebaseio.com/"
 bot = telebot.TeleBot('878935881:AAFtZVhTsrXC4-8vtr5QqTZ6ik8hH8fBxRw')
 
 
+def send_photo(user_id, title):
+    if title == 'Happy Fox Coffee':
+        bot.send_photo(user_id, 'https://astana.restolife.kz/upload/information_system_30/1/2/9/item_12936/information_items_property_13381.jpg')
+    elif title == 'Kunde Social Cafe':
+        bot.send_photo(user_id, 'https://scontent.ftse3-1.fna.fbcdn.net/v/t1.0-9/20604346_263667847464798_3795394876519801540_n.png?_nc_cat=105&_nc_ohc=qsMErKoT3xcAQm7So2rn8mmBOD-XjaNJ2WXWBTmnYkLgxjwz9ohVHaRNQ&_nc_ht=scontent.ftse3-1.fna&oh=262951a42f7a94922a45e671718d5fac&oe=5E7A2D97')
+    elif title == 'Midpoint Cafe & Catering':
+        bot.send_photo(user_id, 'https://scontent.ftse3-1.fna.fbcdn.net/v/t1.0-9/27752611_1677359642343423_1360998110630683309_n.jpg?_nc_cat=103&_nc_ohc=Xf1lFrsTI0IAQk6W8xYtsnKsKBaYZoqdETszKr2vBpoaqWvjwlw7r3rgw&_nc_ht=scontent.ftse3-1.fna&oh=6fb7032972f91bc2cd023ab29cd2fb04&oe=5E832A2C')
+    elif title == 'La Tartine':
+        bot.send_photo(user_id, 'https://www.latartine.kz/assets/images/promo.jpg')
+    elif title == 'Health Project':
+        bot.send_photo(user_id, 'https://slide-share.ru/image/2074452.jpeg')
+    elif title == '6\'\'Inch':
+        bot.send_photo(user_id, 'https://scontent.ftse3-1.fna.fbcdn.net/v/t1.0-9/60761262_331752720830616_9031096920927371264_n.png?_nc_cat=110&_nc_ohc=5GB2eGVtVDkAQkL6H6EXWCYWONGlsORwbYiv4dZmiXAT-1HlA9OUWg9Pw&_nc_ht=scontent.ftse3-1.fna&oh=32b27ee7cbcefd6c22648faa5255c632&oe=5E746DF6')
+    elif title == 'Бодрый День':
+        bot.send_photo(user_id, 'https://weproject.media/upload/medialibrary/b42/b4275c1d3f27f3552ea73d406893c14d.jpg')
+    # elif title == 'Health Project Cafe':
+    # elif title == 'Free Flow':
+    elif title == 'Marketplace':
+        bot.send_photo(user_id, 'http://nazarbayev-marketplace.ru/static/img/logo.0e6a8f0f2ac1.png')
+    elif title == 'Daily Cup':
+        bot.send_photo(user_id, 'https://scontent.ftse3-1.fna.fbcdn.net/v/t1.0-9/27654731_1649170721840804_7861585871180708359_n.jpg?_nc_cat=106&_nc_ohc=M24g97CazD0AQne-3-uoom4G-uBF47o2iiAWVDRqQa352ej-7dvzU_z0g&_nc_ht=scontent.ftse3-1.fna&oh=95ab1eaad78c870a15107294e6df3bf0&oe=5E8798B4')
+
+
 @bot.callback_query_handler(func=lambda c: True)
 def inline(c):
     places = firebase.get('/nupokushaembot/FoodPlace', '')
@@ -748,12 +771,14 @@ def show_info(message):
     for i in result:
     
         key = types.InlineKeyboardMarkup()
-        but_1 = types.InlineKeyboardButton(text='1', callback_data=str(places[i]['Name']) + ", Rating {}".format('1'))
-        but_2 = types.InlineKeyboardButton(text='2', callback_data=str(places[i]['Name']) + ", Rating {}".format('2'))
-        but_3 = types.InlineKeyboardButton(text='3', callback_data=str(places[i]['Name']) + ", Rating {}".format('3'))
-        but_4 = types.InlineKeyboardButton(text='4', callback_data=str(places[i]['Name']) + ", Rating {}".format('4'))
-        but_5 = types.InlineKeyboardButton(text='5', callback_data=str(places[i]['Name']) + ", Rating {}".format('5'))
+        but_1 = types.InlineKeyboardButton(text='⭐️', callback_data=str(places[i]['Name']) + ", Rating {}".format('1'))
+        but_2 = types.InlineKeyboardButton(text='⭐️⭐️', callback_data=str(places[i]['Name']) + ", Rating {}".format('2'))
+        but_3 = types.InlineKeyboardButton(text='⭐️⭐️⭐️', callback_data=str(places[i]['Name']) + ", Rating {}".format('3'))
+        but_4 = types.InlineKeyboardButton(text='⭐️⭐️⭐️⭐️', callback_data=str(places[i]['Name']) + ", Rating {}".format('4'))
+        but_5 = types.InlineKeyboardButton(text='⭐️⭐️⭐️⭐️⭐️', callback_data=str(places[i]['Name']) + ", Rating {}".format('5'))
         key.add(but_1, but_2, but_3, but_4, but_5)
+        
+        send_photo(user, places[i]['Name'])
         
         if len(places[i]) == 8:
             bot.send_message(user, "Название: {}\n"
@@ -799,12 +824,14 @@ def show_info(message):
     for i in result:
     
         key = types.InlineKeyboardMarkup()
-        but_1 = types.InlineKeyboardButton(text='1', callback_data=str(places[i]['Name']) + ", Rating {}".format('1'))
-        but_2 = types.InlineKeyboardButton(text='2', callback_data=str(places[i]['Name']) + ", Rating {}".format('2'))
-        but_3 = types.InlineKeyboardButton(text='3', callback_data=str(places[i]['Name']) + ", Rating {}".format('3'))
-        but_4 = types.InlineKeyboardButton(text='4', callback_data=str(places[i]['Name']) + ", Rating {}".format('4'))
-        but_5 = types.InlineKeyboardButton(text='5', callback_data=str(places[i]['Name']) + ", Rating {}".format('5'))
+        but_1 = types.InlineKeyboardButton(text='⭐️', callback_data=str(places[i]['Name']) + ", Rating {}".format('1'))
+        but_2 = types.InlineKeyboardButton(text='⭐⭐️️', callback_data=str(places[i]['Name']) + ", Rating {}".format('2'))
+        but_3 = types.InlineKeyboardButton(text='⭐⭐⭐️️️', callback_data=str(places[i]['Name']) + ", Rating {}".format('3'))
+        but_4 = types.InlineKeyboardButton(text='⭐⭐⭐⭐️️️️', callback_data=str(places[i]['Name']) + ", Rating {}".format('4'))
+        but_5 = types.InlineKeyboardButton(text='⭐⭐⭐⭐️️️️⭐️', callback_data=str(places[i]['Name']) + ", Rating {}".format('5'))
         key.add(but_1, but_2, but_3, but_4, but_5)
+
+        send_photo(user, places[i]['Name'])
         
         if len(places[i]) == 8:
             bot.send_message(user, "Название: {}\n"
@@ -850,12 +877,14 @@ def show_info(message):
     for i in result:
     
         key = types.InlineKeyboardMarkup()
-        but_1 = types.InlineKeyboardButton(text='1', callback_data=str(places[i]['Name']) + ", Rating {}".format('1'))
-        but_2 = types.InlineKeyboardButton(text='2', callback_data=str(places[i]['Name']) + ", Rating {}".format('2'))
-        but_3 = types.InlineKeyboardButton(text='3', callback_data=str(places[i]['Name']) + ", Rating {}".format('3'))
-        but_4 = types.InlineKeyboardButton(text='4', callback_data=str(places[i]['Name']) + ", Rating {}".format('4'))
-        but_5 = types.InlineKeyboardButton(text='5', callback_data=str(places[i]['Name']) + ", Rating {}".format('5'))
+        but_1 = types.InlineKeyboardButton(text='⭐️', callback_data=str(places[i]['Name']) + ", Rating {}".format('1'))
+        but_2 = types.InlineKeyboardButton(text='⭐⭐️️', callback_data=str(places[i]['Name']) + ", Rating {}".format('2'))
+        but_3 = types.InlineKeyboardButton(text='⭐⭐⭐️️️', callback_data=str(places[i]['Name']) + ", Rating {}".format('3'))
+        but_4 = types.InlineKeyboardButton(text='⭐⭐⭐⭐️️️️', callback_data=str(places[i]['Name']) + ", Rating {}".format('4'))
+        but_5 = types.InlineKeyboardButton(text='⭐⭐⭐⭐️️️️⭐️', callback_data=str(places[i]['Name']) + ", Rating {}".format('5'))
         key.add(but_1, but_2, but_3, but_4, but_5)
+
+        send_photo(user, places[i]['Name'])
         
         if len(places[i]) == 8:
             bot.send_message(user, "Название: {}\n"
@@ -901,12 +930,14 @@ def show_info(message):
     for i in result:
     
         key = types.InlineKeyboardMarkup()
-        but_1 = types.InlineKeyboardButton(text='1', callback_data=str(places[i]['Name']) + ", Rating {}".format('1'))
-        but_2 = types.InlineKeyboardButton(text='2', callback_data=str(places[i]['Name']) + ", Rating {}".format('2'))
-        but_3 = types.InlineKeyboardButton(text='3', callback_data=str(places[i]['Name']) + ", Rating {}".format('3'))
-        but_4 = types.InlineKeyboardButton(text='4', callback_data=str(places[i]['Name']) + ", Rating {}".format('4'))
-        but_5 = types.InlineKeyboardButton(text='5', callback_data=str(places[i]['Name']) + ", Rating {}".format('5'))
+        but_1 = types.InlineKeyboardButton(text='⭐️', callback_data=str(places[i]['Name']) + ", Rating {}".format('1'))
+        but_2 = types.InlineKeyboardButton(text='⭐⭐️️', callback_data=str(places[i]['Name']) + ", Rating {}".format('2'))
+        but_3 = types.InlineKeyboardButton(text='⭐⭐⭐️️️', callback_data=str(places[i]['Name']) + ", Rating {}".format('3'))
+        but_4 = types.InlineKeyboardButton(text='⭐⭐⭐⭐️️️️', callback_data=str(places[i]['Name']) + ", Rating {}".format('4'))
+        but_5 = types.InlineKeyboardButton(text='⭐⭐⭐⭐️️️️⭐️', callback_data=str(places[i]['Name']) + ", Rating {}".format('5'))
         key.add(but_1, but_2, but_3, but_4, but_5)
+
+        send_photo(user, places[i]['Name'])
         
         if len(places[i]) == 8:
             bot.send_message(user, "Название: {}\n"
@@ -952,12 +983,14 @@ def show_info(message):
     for i in result:
         
         key = types.InlineKeyboardMarkup()
-        but_1 = types.InlineKeyboardButton(text='1', callback_data=str(places[i]['Name']) + ", Rating {}".format('1'))
-        but_2 = types.InlineKeyboardButton(text='2', callback_data=str(places[i]['Name']) + ", Rating {}".format('2'))
-        but_3 = types.InlineKeyboardButton(text='3', callback_data=str(places[i]['Name']) + ", Rating {}".format('3'))
-        but_4 = types.InlineKeyboardButton(text='4', callback_data=str(places[i]['Name']) + ", Rating {}".format('4'))
-        but_5 = types.InlineKeyboardButton(text='5', callback_data=str(places[i]['Name']) + ", Rating {}".format('5'))
+        but_1 = types.InlineKeyboardButton(text='⭐️', callback_data=str(places[i]['Name']) + ", Rating {}".format('1'))
+        but_2 = types.InlineKeyboardButton(text='⭐⭐️️', callback_data=str(places[i]['Name']) + ", Rating {}".format('2'))
+        but_3 = types.InlineKeyboardButton(text='⭐⭐⭐️️️', callback_data=str(places[i]['Name']) + ", Rating {}".format('3'))
+        but_4 = types.InlineKeyboardButton(text='⭐⭐⭐⭐️️️️', callback_data=str(places[i]['Name']) + ", Rating {}".format('4'))
+        but_5 = types.InlineKeyboardButton(text='⭐⭐⭐⭐️️️️⭐️', callback_data=str(places[i]['Name']) + ", Rating {}".format('5'))
         key.add(but_1, but_2, but_3, but_4, but_5)
+
+        send_photo(user, places[i]['Name'])
         
         if len(places[i]) == 8:
             bot.send_message(user, "Название: {}\n"
@@ -1003,12 +1036,14 @@ def show_info(message):
     for i in result:
     
         key = types.InlineKeyboardMarkup()
-        but_1 = types.InlineKeyboardButton(text='1', callback_data=str(places[i]['Name']) + ", Rating {}".format('1'))
-        but_2 = types.InlineKeyboardButton(text='2', callback_data=str(places[i]['Name']) + ", Rating {}".format('2'))
-        but_3 = types.InlineKeyboardButton(text='3', callback_data=str(places[i]['Name']) + ", Rating {}".format('3'))
-        but_4 = types.InlineKeyboardButton(text='4', callback_data=str(places[i]['Name']) + ", Rating {}".format('4'))
-        but_5 = types.InlineKeyboardButton(text='5', callback_data=str(places[i]['Name']) + ", Rating {}".format('5'))
+        but_1 = types.InlineKeyboardButton(text='⭐️', callback_data=str(places[i]['Name']) + ", Rating {}".format('1'))
+        but_2 = types.InlineKeyboardButton(text='⭐⭐️️', callback_data=str(places[i]['Name']) + ", Rating {}".format('2'))
+        but_3 = types.InlineKeyboardButton(text='⭐⭐⭐️️️', callback_data=str(places[i]['Name']) + ", Rating {}".format('3'))
+        but_4 = types.InlineKeyboardButton(text='⭐⭐⭐⭐️️️️', callback_data=str(places[i]['Name']) + ", Rating {}".format('4'))
+        but_5 = types.InlineKeyboardButton(text='⭐⭐⭐⭐️️️️⭐️', callback_data=str(places[i]['Name']) + ", Rating {}".format('5'))
         key.add(but_1, but_2, but_3, but_4, but_5)
+
+        send_photo(user, places[i]['Name'])
         
         if len(places[i]) == 8:
             bot.send_message(user, "Название: {}\n"
@@ -1054,12 +1089,14 @@ def show_info(message):
     for i in result:
     
         key = types.InlineKeyboardMarkup()
-        but_1 = types.InlineKeyboardButton(text='1', callback_data=str(places[i]['Name']) + ", Rating {}".format('1'))
-        but_2 = types.InlineKeyboardButton(text='2', callback_data=str(places[i]['Name']) + ", Rating {}".format('2'))
-        but_3 = types.InlineKeyboardButton(text='3', callback_data=str(places[i]['Name']) + ", Rating {}".format('3'))
-        but_4 = types.InlineKeyboardButton(text='4', callback_data=str(places[i]['Name']) + ", Rating {}".format('4'))
-        but_5 = types.InlineKeyboardButton(text='5', callback_data=str(places[i]['Name']) + ", Rating {}".format('5'))
+        but_1 = types.InlineKeyboardButton(text='⭐️', callback_data=str(places[i]['Name']) + ", Rating {}".format('1'))
+        but_2 = types.InlineKeyboardButton(text='⭐⭐️️', callback_data=str(places[i]['Name']) + ", Rating {}".format('2'))
+        but_3 = types.InlineKeyboardButton(text='⭐⭐⭐️️️', callback_data=str(places[i]['Name']) + ", Rating {}".format('3'))
+        but_4 = types.InlineKeyboardButton(text='⭐⭐⭐⭐️️️️', callback_data=str(places[i]['Name']) + ", Rating {}".format('4'))
+        but_5 = types.InlineKeyboardButton(text='⭐⭐⭐⭐️️️️⭐️', callback_data=str(places[i]['Name']) + ", Rating {}".format('5'))
         key.add(but_1, but_2, but_3, but_4, but_5)
+
+        send_photo(user, places[i]['Name'])
         
         if len(places[i]) == 8:
             bot.send_message(user, "Название: {}\n"
@@ -1090,7 +1127,7 @@ def show_info(message):
     keyboard_first(user)
 
 
-@bot.message_handler(regexp="Обед (Ужин)")
+@bot.message_handler(regexp="Обед-Ужин")
 def show_info(message):
     user = message.from_user.id
     places = firebase.get('/nupokushaembot/FoodPlace', '')
@@ -1105,12 +1142,14 @@ def show_info(message):
     for i in result:
     
         key = types.InlineKeyboardMarkup()
-        but_1 = types.InlineKeyboardButton(text='1', callback_data=str(places[i]['Name']) + ", Rating {}".format('1'))
-        but_2 = types.InlineKeyboardButton(text='2', callback_data=str(places[i]['Name']) + ", Rating {}".format('2'))
-        but_3 = types.InlineKeyboardButton(text='3', callback_data=str(places[i]['Name']) + ", Rating {}".format('3'))
-        but_4 = types.InlineKeyboardButton(text='4', callback_data=str(places[i]['Name']) + ", Rating {}".format('4'))
-        but_5 = types.InlineKeyboardButton(text='5', callback_data=str(places[i]['Name']) + ", Rating {}".format('5'))
+        but_1 = types.InlineKeyboardButton(text='⭐️', callback_data=str(places[i]['Name']) + ", Rating {}".format('1'))
+        but_2 = types.InlineKeyboardButton(text='⭐⭐️️', callback_data=str(places[i]['Name']) + ", Rating {}".format('2'))
+        but_3 = types.InlineKeyboardButton(text='⭐⭐⭐️️️', callback_data=str(places[i]['Name']) + ", Rating {}".format('3'))
+        but_4 = types.InlineKeyboardButton(text='⭐⭐⭐⭐️️️️', callback_data=str(places[i]['Name']) + ", Rating {}".format('4'))
+        but_5 = types.InlineKeyboardButton(text='⭐⭐⭐⭐️️️️⭐️', callback_data=str(places[i]['Name']) + ", Rating {}".format('5'))
         key.add(but_1, but_2, but_3, but_4, but_5)
+
+        send_photo(user, places[i]['Name'])
         
         if len(places[i]) == 8:
             bot.send_message(user, "Название: {}\n"
@@ -1157,12 +1196,14 @@ def show_info(message):
     for i in result:
     
         key = types.InlineKeyboardMarkup()
-        but_1 = types.InlineKeyboardButton(text='1', callback_data=str(places[i]['Name']) + ", Rating {}".format('1'))
-        but_2 = types.InlineKeyboardButton(text='2', callback_data=str(places[i]['Name']) + ", Rating {}".format('2'))
-        but_3 = types.InlineKeyboardButton(text='3', callback_data=str(places[i]['Name']) + ", Rating {}".format('3'))
-        but_4 = types.InlineKeyboardButton(text='4', callback_data=str(places[i]['Name']) + ", Rating {}".format('4'))
-        but_5 = types.InlineKeyboardButton(text='5', callback_data=str(places[i]['Name']) + ", Rating {}".format('5'))
+        but_1 = types.InlineKeyboardButton(text='⭐️', callback_data=str(places[i]['Name']) + ", Rating {}".format('1'))
+        but_2 = types.InlineKeyboardButton(text='⭐⭐️️', callback_data=str(places[i]['Name']) + ", Rating {}".format('2'))
+        but_3 = types.InlineKeyboardButton(text='⭐⭐⭐️️️', callback_data=str(places[i]['Name']) + ", Rating {}".format('3'))
+        but_4 = types.InlineKeyboardButton(text='⭐⭐⭐⭐️️️️', callback_data=str(places[i]['Name']) + ", Rating {}".format('4'))
+        but_5 = types.InlineKeyboardButton(text='⭐⭐⭐⭐️️️️⭐️', callback_data=str(places[i]['Name']) + ", Rating {}".format('5'))
         key.add(but_1, but_2, but_3, but_4, but_5)
+
+        send_photo(user, places[i]['Name'])
         
         if len(places[i]) == 8:
             bot.send_message(user, "Название: {}\n"
@@ -1209,12 +1250,14 @@ def show_info(message):
     for i in result:
     
         key = types.InlineKeyboardMarkup()
-        but_1 = types.InlineKeyboardButton(text='1', callback_data=str(places[i]['Name']) + ", Rating {}".format('1'))
-        but_2 = types.InlineKeyboardButton(text='2', callback_data=str(places[i]['Name']) + ", Rating {}".format('2'))
-        but_3 = types.InlineKeyboardButton(text='3', callback_data=str(places[i]['Name']) + ", Rating {}".format('3'))
-        but_4 = types.InlineKeyboardButton(text='4', callback_data=str(places[i]['Name']) + ", Rating {}".format('4'))
-        but_5 = types.InlineKeyboardButton(text='5', callback_data=str(places[i]['Name']) + ", Rating {}".format('5'))
+        but_1 = types.InlineKeyboardButton(text='⭐️', callback_data=str(places[i]['Name']) + ", Rating {}".format('1'))
+        but_2 = types.InlineKeyboardButton(text='⭐⭐️️', callback_data=str(places[i]['Name']) + ", Rating {}".format('2'))
+        but_3 = types.InlineKeyboardButton(text='⭐⭐⭐️️️', callback_data=str(places[i]['Name']) + ", Rating {}".format('3'))
+        but_4 = types.InlineKeyboardButton(text='⭐⭐⭐⭐️️️️', callback_data=str(places[i]['Name']) + ", Rating {}".format('4'))
+        but_5 = types.InlineKeyboardButton(text='⭐⭐⭐⭐️️️️⭐️', callback_data=str(places[i]['Name']) + ", Rating {}".format('5'))
         key.add(but_1, but_2, but_3, but_4, but_5)
+
+        send_photo(user, places[i]['Name'])
         
         if len(places[i]) == 8:
             bot.send_message(user, "Название: {}\n"
@@ -1251,7 +1294,7 @@ def food_tags(user_id):
     item_1 = types.KeyboardButton('Кофе')
     item_2 = types.KeyboardButton('Фаст-фуд')
     item_3 = types.KeyboardButton('Завтрак')
-    item_4 = types.KeyboardButton('Обед (Ужин)')
+    item_4 = types.KeyboardButton('Обед-Ужин')
     item_5 = types.KeyboardButton('Суши')
     item_6 = types.KeyboardButton('Дессерт')
     markup.row(item_1, item_2, item_3)
@@ -1289,12 +1332,14 @@ def ratings(user_id):
     for i in ids:
     
         key = types.InlineKeyboardMarkup()
-        but_1 = types.InlineKeyboardButton(text='1', callback_data=str(places[i]['Name']) + ", Rating {}".format('1'))
-        but_2 = types.InlineKeyboardButton(text='2', callback_data=str(places[i]['Name']) + ", Rating {}".format('2'))
-        but_3 = types.InlineKeyboardButton(text='3', callback_data=str(places[i]['Name']) + ", Rating {}".format('3'))
-        but_4 = types.InlineKeyboardButton(text='4', callback_data=str(places[i]['Name']) + ", Rating {}".format('4'))
-        but_5 = types.InlineKeyboardButton(text='5', callback_data=str(places[i]['Name']) + ", Rating {}".format('5'))
+        but_1 = types.InlineKeyboardButton(text='⭐️', callback_data=str(places[i]['Name']) + ", Rating {}".format('1'))
+        but_2 = types.InlineKeyboardButton(text='⭐⭐️️', callback_data=str(places[i]['Name']) + ", Rating {}".format('2'))
+        but_3 = types.InlineKeyboardButton(text='⭐⭐⭐️️️', callback_data=str(places[i]['Name']) + ", Rating {}".format('3'))
+        but_4 = types.InlineKeyboardButton(text='⭐⭐⭐⭐️️️️', callback_data=str(places[i]['Name']) + ", Rating {}".format('4'))
+        but_5 = types.InlineKeyboardButton(text='⭐⭐⭐⭐️️️️⭐️', callback_data=str(places[i]['Name']) + ", Rating {}".format('5'))
         key.add(but_1, but_2, but_3, but_4, but_5)
+
+        send_photo(user_id, places[i]['Name'])
         
         if len(places[i]) == 8:
             bot.send_message(user_id, "Название: {}\n"
