@@ -2,8 +2,19 @@ import telebot
 import os
 import re
 from datetime import datetime
+from telebot import types
 
 bot = telebot.TeleBot('878935881:AAFtZVhTsrXC4-8vtr5QqTZ6ik8hH8fBxRw')
+
+def keyboard_first(user_id):
+    markup = types.ReplyKeyboardMarkup()
+    item_chto = types.KeyboardButton('Что поесть?')
+    item_gde = types.KeyboardButton('Где поесть?')
+    item_rate = types.KeyboardButton('Рейтинг')
+    markup.row(item_chto)
+    markup.row(item_gde)
+    markup.row(item_rate)
+    bot.send_message(user_id, "Выберите способ поиска", reply_markup=markup)
 
 # response to \start
 @bot.message_handler(commands=['start'])
@@ -31,6 +42,8 @@ def handle_email(message):
     if (re.search("@nu.edu.kz", text)):
         # TO-DO handle email
         bot.send_message(user, "Вы успешно зарегистрированы.")
+        keyboard_first(user)
+       
     elif (re.search("@", text)):
         bot.send_message(user, "Пожалуйста, введите email с @nu.edu.kz.")
     else:
