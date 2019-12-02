@@ -2,8 +2,11 @@ from telebot import types
 from firebase import firebase
 from operator import itemgetter
 
-import telebot
+import numpy
 import re
+import smtplib
+import ssl
+import telebot
 
 firebase = firebase.FirebaseApplication("https://nupokushaembot.firebaseio.com/", None)
 
@@ -589,6 +592,38 @@ def handle_email(message):
     user = message.from_user.id
     ratings(user)
 
+def random_generator():
+    code = numpy.random.randint(low=1000,high=9999)
+    print(code)
+    return code
+
+def verify_user(user_id, user_email):
+    bot.send_message(user_id, "Пожалуйста, отправьте код ответом на это сообщение.")
+    port = 465
+    sender = "saadatsunnysmile@gmail.com"
+    send_psw = "GGGg5555"
+    code = random_generator()
+    message = """\
+    NU pokushaem! Verification Code
+
+    """ + str(code) + """
+
+    Please, send this code to bot.
+    """
+    context = ssl.create_default_context()
+    print ("sending message")
+    with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
+        server.login(sender, send_psw)
+        server.sendmail(sender, user_email, message)
+    print("message sent")
+
+    @bot.message_handler(regexp="[0-9]{4}")
+    def code_verification(message):
+        user_id = message.from_user.id
+        local_code = message.text
+        if (str(local_code) == str(code)):        
+            # go-to options keyboard
+            keyboard_first(user_id) 
 
 def keyboard_first(user_id):
     markup = types.ReplyKeyboardMarkup()
@@ -612,17 +647,14 @@ def react_start(message):
 @bot.message_handler(regexp="@")
 def handle_email(message):
     user = message.from_user.id
-    text = message.text
-    
-    # check domain
-    if re.search("@nu.edu.kz", text):
+    email = message.text
+    #check domain
+    if (re.search("@nu.edu.kz", email)):
         # TO-DO handle email
-        bot.send_message(user, "Вы успешно зарегистрированы.")
-        # go-to options keyboard
-        keyboard_first(user)
-    elif re.search("@", text):
+        bot.send_message(user, "На этот email придет сообщение с кодом доступа.")
+        verify_user(user, email)      
+    elif (re.search("@", email)):
         bot.send_message(user, "Пожалуйста, введите email с @nu.edu.kz.")
-
 
 @bot.message_handler(content_types=['voice'])
 def get_audio_messages(message):
