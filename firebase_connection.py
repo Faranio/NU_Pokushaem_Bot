@@ -1,4 +1,5 @@
 from firebase import firebase
+from operator import itemgetter
 
 firebase = firebase.FirebaseApplication("https://nupokushaembot.firebaseio.com/", None)
 
@@ -126,4 +127,13 @@ firebase.put('/nupokushaembot/FoodPlace/-Lv4MCK8znVcd8VI9njz', 'Food', ['Fast Fo
 
 # Get item
 
-print(firebase.get('/nupokushaembot/FoodPlace', '-Lv4MAUC-rD-gR79GRtV'))
+places = firebase.get('/nupokushaembot/FoodPlace', '')
+ratings = []
+final_ratings = []
+
+for i in places:
+	ratings.append([i, places[i]['Rating']])
+
+ratings = sorted(ratings, key=itemgetter(1))
+ratings.reverse()
+ratings = dict(ratings)
