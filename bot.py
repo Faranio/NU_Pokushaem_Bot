@@ -14,10 +14,10 @@ def react_start(message):
     print('Start')
     print('User: ' + str(user))
 
-    bot.send_message(user, "Пожалуйста, введите имейл для регистрации.")
+    bot.send_message(user, "Пожалуйста, введите email для регистрации.")
 
 # response to email address
-@bot.message_handler(regexp="@")
+@bot.message_handler(content_types=['text'])
 def handle_email(message):
     user = message.from_user.id
     text = message.text
@@ -33,20 +33,8 @@ def handle_email(message):
         bot.send_message(user, "Вы успешно зарегистрированы.")
     elif (re.search("@", text)):
         bot.send_message(user, "Пожалуйста, введите email с @nu.edu.kz.")
-
-
-@bot.message_handler(content_types=['text'])
-def get_text_messages(message):
-    user = message.from_user.id
-    text = message.text
-
-    # log server
-    print('Text request.')
-    print('User: ' + str(user))
-    print('Text: ' + text)
-
-    # print user
-    bot.send_message(user, "You wrote " + message.text)
+    else:
+        bot.send_message(user, "Пожалуйста, введите email.")
 
 
 @bot.message_handler(content_types=['voice'])
